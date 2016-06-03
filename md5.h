@@ -1,13 +1,11 @@
+#ifndef _MD5_H
+#define _MD5_H
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-#ifdef __APPLE__
-#define COMMON_DIGEST_FOR_OPENSSL
-#include <CommonCrypto/CommonDigest.h>
-#define SHA1 CC_SHA1
-#else
-#include <openssl/md5.h>
-#endif
+#define HASH_LEN 33
 
 char *md5(const char *, int);
+
+#endif

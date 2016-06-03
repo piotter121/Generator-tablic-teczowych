@@ -1,15 +1,25 @@
 #ifndef _TABLE_ROW_H
 #define _TABLE_ROW_H
+
 #include <pthread.h>
 #include <stdlib.h>
-#define PASS_LENGTH 8
+#include <string.h>
+#include "md5.h"
+
+#define PASS_LENGTH 4
+#define ALPHABET "1234567890"
+#define ROUNDS 5
 
 typedef struct row {
-	char first_pass[PASS_LENGTH];
-	char last_pass[PASS_LENGTH];
+	char *first_pass;
+	char *last_hash;
 	int rounds;
 } table_row;
 
-void operation_on_rows(table_row *, int, (void *)(*op)(void *));
+void *initRow(void *);
+
+table_row *initTable(int);
+
+void operation_on_vector(void *, int, (void *)(*op)(void *));
 
 #endif
