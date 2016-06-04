@@ -5,14 +5,20 @@ EXECUTABLE=generator
 
 all: generator
 
-generator: main.o
+generator: main.o md5.o table_row.o reduction_function.o
 	$(CC) $(LDFLAGS) $^ -o $(EXECUTABLE)
 
 main.o: main.cu
-	$(CC) $(CFLAGS) $^
+	$(CC) $(CFLAGS) $^ -o $@
 
-md5.o: md5.c md5.h
-	$(CC) $(CFLAGS) md5.c
+md5.o: md5.cu md5.h
+	$(CC) $(CFLAGS) md5.cu -o $@
 
-table_row.o: table_row.c table_row.h
-	$(CC) $(CFLAGS) table_row.c
+table_row.o: table_row.cu table_row.h
+	$(CC) $(CFLAGS) table_row.cu -o $@
+
+reduction_function.o: reduction_function.cu reduction_function.h
+	$(CC) $(CFLAGS) reduction_function.cu -o $@ 
+
+clean:
+	rm -f *.o 

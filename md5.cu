@@ -12,7 +12,7 @@ char *md5(const char *str, int length) {
 	int n;
 	MD5_CTX c;
 	unsigned char digest[16];
-	char *out = (char*) malloc(33 * sizeof(*out));
+	char *out = (char *) malloc(HASH_LEN * sizeof(*out));
 
 	MD5_Init(&c);
 

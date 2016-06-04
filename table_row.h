@@ -9,6 +9,7 @@
 #define PASS_LENGTH 4
 #define ALPHABET "1234567890"
 #define ROUNDS 5
+#define SEED time(NULL) 
 
 typedef struct row {
 	char *first_pass;
@@ -20,6 +21,6 @@ void *initRow(void *);
 
 table_row *initTable(int);
 
-void operation_on_vector(void *, int, (void *)(*op)(void *));
+void operation_on_vector(void *, int, void *(*)(void *));
 
 #endif
