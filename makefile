@@ -21,4 +21,4 @@ reduction_function.o: reduction_function.cu reduction_function.h
 	$(CC) $(CFLAGS) reduction_function.cu -o $@ 
 
 clean:
-	rm -f *.o 
+	rm -f *.o generator 
