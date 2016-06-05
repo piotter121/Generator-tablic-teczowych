@@ -1,6 +1,8 @@
 #ifndef _REDUCTION_FUNCTION_H
 #define _REDUCTION_FUNCTION_H
 
+#include <stdlib.h>
+
 #include "table_row.h"
 
 __global__ void reduction(char **, char **);

@@ -5,10 +5,13 @@ pthread_mutex_t rand_mutex = PTHREAD_MUTEX_INITIALIZER;
 void *initRow(void *r) {
 	int i;
 	int alphabet_len = strlen(ALPHABET);
+	// printf("Długość alfabetu to %d\n", alphabet_len);
 	char *alphabet = (char *) malloc((alphabet_len + 1) * sizeof(*alphabet));
 	table_row *row = (table_row *) r;
 
+	// printf("Kopiowanie alfabetu do tymczasowej zmiennej\n");
 	strcpy(alphabet, ALPHABET);
+	// printf("Alfabet w tymczasowej zmiennej to %s\n", alphabet);
 	(*row).first_pass = (char *) malloc(PASS_LENGTH * sizeof(char));
 
 	for(i = 0; i < PASS_LENGTH; i++) {
@@ -26,9 +29,13 @@ void *initRow(void *r) {
 table_row *initTable(int nrows) {
 	table_row *rows;
 	int table_size = nrows * sizeof(table_row);
+	
+	// printf("Alfabet to %s\n", ALPHABET);
 
+	// printf("Inicjowanie pamięci dla %d wierszy\n", nrows);
 	rows = (table_row *) malloc(table_size);
 	srand(SEED);
+	// printf("Uruchamianie operacji na wektorze\n");
 	operation_on_vector(rows, nrows, initRow);
 
 	return rows;
