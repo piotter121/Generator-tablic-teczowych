@@ -23,6 +23,8 @@ void *initRow(void *r) {
 	(*row).last_hash = (char *) malloc(HASH_LEN * sizeof(char));
 	(*row).rounds = ROUNDS;
 
+	free(alphabet);
+
 	return NULL;	
 }
 

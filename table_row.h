@@ -10,6 +10,7 @@
 #define ALPHABET "1234567890"
 #define ROUNDS 5
 #define SEED time(NULL) 
+#define ROWS_PER_PART 32500
 
 typedef struct row {
 	char *first_pass;

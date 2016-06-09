@@ -53,8 +53,14 @@ void reduct_rows(char **pass, char **hash, int n) {
 	}
 
 	// free memory
-	cudaFree(d_pass);
-	cudaFree(d_hash);
+	for (i = 0; i < n; i++) {
+		cudaFree(d_pass[i]);
+		cudaFree(d_hash[i]);
+	}
+	cudaFree(d_pass2);
+	cudaFree(d_hash2);
+	free(d_pass);
+	free(d_hash);
 }
 
 
