@@ -8,8 +8,8 @@ all: generator
 generator: main.o md5.o table_row.o reduction_function.o
 	$(CC) $(LDFLAGS) $^ -o $(EXECUTABLE)
 
-main.o: main.cu
-	$(CC) $(CFLAGS) $^ -o $@
+main.o: main.cu table_row.h md5.h reduction_function.h
+	$(CC) $(CFLAGS) main.cu -o $@
 
 md5.o: md5.cu md5.h
 	$(CC) $(CFLAGS) md5.cu -o $@

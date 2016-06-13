@@ -5,22 +5,20 @@ pthread_mutex_t rand_mutex = PTHREAD_MUTEX_INITIALIZER;
 void *initRow(void *r) {
 	int i;
 	int alphabet_len = strlen(ALPHABET);
-	// printf("Długość alfabetu to %d\n", alphabet_len);
 	char *alphabet = (char *) malloc((alphabet_len + 1) * sizeof(*alphabet));
 	table_row *row = (table_row *) r;
 
-	// printf("Kopiowanie alfabetu do tymczasowej zmiennej\n");
 	strcpy(alphabet, ALPHABET);
-	// printf("Alfabet w tymczasowej zmiennej to %s\n", alphabet);
-	(*row).first_pass = (char *) malloc(PASS_LENGTH * sizeof(char));
 
-	for(i = 0; i < PASS_LENGTH; i++) {
+	for (i = 0; i < PASS_LENGTH; i++) {
 		pthread_mutex_lock(&rand_mutex);
 		(*row).first_pass[i] = alphabet[rand() % alphabet_len];
 		pthread_mutex_unlock(&rand_mutex);
 	}
-
-	(*row).last_hash = (char *) malloc(HASH_LEN * sizeof(char));
+	
+	for (i = 0; i < HASH_LEN; i++) 
+		(*row).last_hash[i] = '0';
+		
 	(*row).rounds = ROUNDS;
 
 	free(alphabet);
@@ -28,29 +26,19 @@ void *initRow(void *r) {
 	return NULL;	
 }
 
-table_row *initTable(int nrows) {
-	table_row *rows;
-	int table_size = nrows * sizeof(table_row);
-	
-	// printf("Alfabet to %s\n", ALPHABET);
-
-	// printf("Inicjowanie pamięci dla %d wierszy\n", nrows);
-	rows = (table_row *) malloc(table_size);
+void initTable(table_row *rows, int nrows) {
 	srand(SEED);
-	// printf("Uruchamianie operacji na wektorze\n");
-	operation_on_vector(rows, nrows, initRow);
-
-	return rows;
+	operation_on_rows(rows, nrows, initRow);
 }
 
-void operation_on_vector(void *rows, int n, void *(*op)(void *)) {
+void operation_on_rows(void *rows, int n, void *(*operation)(void *)) {
 	int i;	
 	table_row *r = (table_row *) rows;
 	pthread_t *threads = (pthread_t *) malloc(n * sizeof(*threads));
 	
 	for (i = 0; i < n; i++) {
-		if (pthread_create(&threads[i], NULL, op, &r[i])) {
-			fprintf(stderr, "Błąd w tworzeniu wątków!");
+		if (pthread_create(&threads[i], NULL, operation, &r[i])) {
+			fprintf(stderr, "Błąd w tworzeniu wątków!\n");
 			exit(EXIT_FAILURE);
 		}
 	}

@@ -20,8 +20,8 @@ typedef struct row {
 
 void *initRow(void *);
 
-table_row *initTable(int);
+void initTable(table_row *, int);
 
-void operation_on_vector(void *, int, void *(*)(void *));
+void operation_on_rows(void *, int, void *(*)(void *));
 
 #endif
